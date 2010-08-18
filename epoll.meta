@@ -1,3 +1,6 @@
 ((egg "epoll.egg")
     (author "David Reynolds")
+    (synopsis "Support for epoll in Linux")
+    (license "BSD")
+    (category os)
     (files "epoll-c.h" "epoll-c.c" "epoll.scm" "epoll.setup"))
