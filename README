@@ -1,0 +1,5 @@
+$ git clone git://github.com/davidreynolds/epoll.git
+$ cd epoll
+$ sudo chicken-install epoll.setup
+
+If everything went correctly you should have a working epoll egg now installed. Please note that epoll is only available on Linux.
