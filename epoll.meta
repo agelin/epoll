@@ -1,0 +1,3 @@
+((egg "epoll.egg")
+    (author "David Reynolds")
+    (files "epoll-c.h" "epoll-c.c" "epoll.scm" "epoll.setup"))

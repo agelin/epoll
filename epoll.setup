@@ -1,0 +1,2 @@
+(compile -s epoll.scm -j epoll)
+(compile -s epoll.import.scm)
