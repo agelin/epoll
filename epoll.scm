@@ -41,7 +41,8 @@
      epoll-wait
      epoll-add
      epoll-modify
-     epoll-delete)
+     epoll-delete
+     _READ _WRITE _ERROR)
 
     (import scheme chicken foreign)
     (use tcp)
@@ -71,7 +72,20 @@ EOF
 
 (define epoll-create (foreign-lambda int "_epoll_create"))
 (define epoll-ctl (foreign-lambda int "_epoll_ctl" int int int int))
-(define epoll-wait (foreign-lambda scheme-object "_epoll_wait" int int))
+
+(define user-defined-callback #f)
+
+(define _epoll_wait (foreign-safe-lambda void "_epoll_wait" int int))
+
+;; wrapper for _epoll_wait that accepts a callback into the user's application and sets it globally
+(define (epoll-wait epfd timeout user-callback)
+    (if (eq? user-defined-callback #f)
+        (set! user-defined-callback user-callback))
+    (_epoll_wait epfd timeout))
+
+(define-external (SCM_epoll_wait_cb (scheme-object vec)) void
+    (let ((li (vector->list vec)))
+        (user-defined-callback li)))
 
 (define (epoll-add epfd fd iostate)
     (epoll-ctl epfd EPOLL_CTL_ADD fd iostate))

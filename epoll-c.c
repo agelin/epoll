@@ -33,6 +33,8 @@
 
 #define MAX_EVENTS 24
 
+extern void SCM_epoll_wait_cb(C_word);
+
 static int _epoll_create(void) {
     /* Returns an epfd */
     return epoll_create(MAX_EVENTS);
@@ -53,7 +55,7 @@ static int _epoll_ctl(int epfd, int op, int fd, int events) {
     return res;
 }
 
-static C_word _epoll_wait(int epfd, int timeout) {
+static void _epoll_wait(int epfd, int timeout) {
     /* Wrapper around epoll_wait. It calls a scheme callback
      * function with a vector of pairs */
     struct epoll_event events[MAX_EVENTS];
@@ -73,5 +75,5 @@ static C_word _epoll_wait(int epfd, int timeout) {
         *(vecp++) = C_pair(&pairp, C_fix(events[i].data.fd), C_fix(events[i].events));
     }
 
-    return (C_word)v0;
+    SCM_epoll_wait_cb((C_word)v0);
 }
