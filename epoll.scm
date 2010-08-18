@@ -47,9 +47,6 @@
     (use tcp)
 
 (foreign-declare #<<EOF
-#include <sys/epoll.h>
-#include <fcntl.h>
-
 #include "epoll-c.h"
 #include "epoll-c.c"
 EOF
@@ -84,3 +81,5 @@ EOF
 
 (define (epoll-delete epfd fd)
     (epoll-ctl epfd EPOLL_CTL_DEL fd 0))
+
+)
