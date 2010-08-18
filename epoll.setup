@@ -1,2 +1,5 @@
 (compile -s epoll.scm -j epoll)
 (compile -s epoll.import.scm)
+
+(install-extension 'epoll '("epoll.so" "epoll.import.so")
+                   '((version 0.1)))
