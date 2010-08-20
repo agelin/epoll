@@ -85,6 +85,7 @@ EOF
 
 (define-external (SCM_epoll_wait_cb (scheme-object vec)) void
     (let ((li (vector->list vec)))
+        ;; call the callback that was supplied by the user in epoll-wait
         (user-defined-callback li)))
 
 (define (epoll-add epfd fd iostate)
